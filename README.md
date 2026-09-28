@@ -115,7 +115,6 @@ The site is deployed on **Vercel**. Any push to the main branch redeploys it aut
 ---
 
 <div align="center">
-
-Made with ❤️ by **Ali Alami Marktani** · ESISA, Fès
+by **Ali Alami Marktani** · ESISA, Fès
 
 </div>
