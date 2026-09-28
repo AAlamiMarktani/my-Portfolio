@@ -134,9 +134,9 @@ function confetti(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)ret
 function begin(){if(started)return;started=true;$('#intro').classList.add('off');sndInit();toast('🏁 Arrête-toi aux aires de repos pour découvrir mon parcours')}
 function restart(){v=0;x=0;auto=null;yaw=0;car.position.set(0,0,10);cur=-2;started=false;done=false;toll=false;drive=0;vmax=0;nit=1;boost=0;seen.clear();pills.forEach(p=>p.classList.remove('done','on'));$('#sn').textContent=0;$('#tm').textContent='0:00';card.classList.remove('show');$('#hint').style.opacity=1;$('#intro').classList.remove('off')}
 $('#go').onclick=begin;$('#tc').onclick=camNext;$('#tn').onclick=()=>setNight(!night);$('#tsn').onclick=mute;
-const COARSE=matchMedia('(pointer:coarse)').matches;let gasB=0,brkB=0;
-if(COARSE)$('#hint').innerHTML='Glisse à gauche-droite pour diriger<br>▲ avancer · ▼ reculer';
-[['#pg',1],['#pb',0]].forEach(([id,g])=>{const b=$(id),set=v=>{if(g)gasB=v;else brkB=v;b.classList.toggle('on',!!v)};b.addEventListener('pointerdown',e=>{if(!started)return;set(1);try{b.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});['pointerup','pointercancel','lostpointercapture'].forEach(n=>b.addEventListener(n,()=>set(0)));b.addEventListener('contextmenu',e=>e.preventDefault())});
+const COARSE=matchMedia('(pointer:coarse)').matches;let gasB=0,brkB=0,strL=0,strR=0;
+if(COARSE)$('#hint').innerHTML='◀ ▶ pour tourner · ▲ avancer · ▼ reculer';
+[['#pg',v=>gasB=v],['#pb',v=>brkB=v],['#pl',v=>strL=v],['#pr',v=>strR=v]].forEach(([id,fn])=>{const b=$(id),set=v=>{fn(v);b.classList.toggle('on',!!v)};b.addEventListener('pointerdown',e=>{if(!started)return;set(1);try{b.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});['pointerup','pointercancel','lostpointercapture'].forEach(n=>b.addEventListener(n,()=>set(0)));b.addEventListener('contextmenu',e=>e.preventDefault())});
 const tb=$('#tb');tb.addEventListener('pointerdown',e=>{turbo=1;tb.classList.add('on');e.preventDefault()});['pointerup','pointercancel','pointerleave'].forEach(n=>tb.addEventListener(n,()=>{turbo=0;tb.classList.remove('on')}));
 const COL=[['Rouge Monaco',0xce1126],['Argent',0xc3c8d0],['Noir',0x17181c],['Bleu',0x1f6fe0],['Or',0xd4af37],['Vert',0x1f9d55]];
 COL.forEach((c,i)=>{const b=document.createElement('button');b.className='sw'+(i?'':' on');b.title=c[0];b.setAttribute('aria-label',c[0]);b.style.background='#'+c[1].toString(16).padStart(6,'0');b.onclick=()=>{paint.color.set(c[1]);ug.color.set(c[1]);document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));b.classList.add('on')};$('#sw').appendChild(b)});
@@ -147,8 +147,8 @@ var BF=60;function size(){BF=innerWidth<innerHeight?82:60;R.setSize(innerWidth,i
 const pills=[...document.querySelectorAll('.pill')],card=$('#card');
 const tk=(z,c)=>{const d=document.createElement('i');d.className='tk';d.style.left=((10-z)/530*100)+'%';d.style.background=c;$('#pt').appendChild(d)};S.forEach(s=>tk(s.z,'#'+s.c.toString(16).padStart(6,'0')));tk(TZ,'#d4af37');tk(FZ,'#ffffff');
 R.setAnimationLoop(()=>{const dt=Math.min(clk.getDelta(),.05);t+=dt;const pz=car.position.z;
-const qg=K.ArrowUp||K.KeyW||(hold&&!COARSE)||gasB,qb=K.ArrowDown||K.KeyS||K.Space||brkB,want=!!((K.ShiftLeft||K.ShiftRight||turbo)&&nit>.02&&started),man=qg||qb||K.ArrowLeft||K.KeyA||K.ArrowRight||K.KeyD||Math.abs(imp)>.5||want;
-let sw=(K.ArrowRight||K.KeyD?1:0)-(K.ArrowLeft||K.KeyA?1:0)+(hold?Math.max(-1,Math.min(1,(px-.5)*2.6)):0);
+const qg=K.ArrowUp||K.KeyW||(hold&&!COARSE)||gasB,qb=K.ArrowDown||K.KeyS||K.Space||brkB,want=!!((K.ShiftLeft||K.ShiftRight||turbo)&&nit>.02&&started),man=qg||qb||strL||strR||K.ArrowLeft||K.KeyA||K.ArrowRight||K.KeyD||Math.abs(imp)>.5||want;
+let sw=(K.ArrowRight||K.KeyD||strR?1:0)-(K.ArrowLeft||K.KeyA||strL?1:0)+(hold?Math.max(-1,Math.min(1,(px-.5)*2.6)):0);
 boost+=((want?1:0)-boost)*Math.min(1,dt*5);nit=want?Math.max(0,nit-dt*.35):Math.min(1,nit+dt*.05);
 const inRest=S.some(q=>Math.abs(pz-q.z)<16)&&x>7.5;if(inRest&&started)nit=Math.min(1,nit+dt*.25);
 if(started){if(auto!==null&&!man){const d=pz-auto,xp=x;v+=(Math.max(-30,Math.min(48,d*.7))-v)*Math.min(1,dt*2.2);x+=(((Math.abs(d)<16&&S.some(q=>q.z===auto))?9:0)-x)*dt*2;sw=0;const vx=(x-xp)/Math.max(dt,.001);yaw+=((-Math.atan(vx/Math.max(8,Math.abs(v))))-yaw)*Math.min(1,dt*6);if(Math.abs(d)<1.2&&Math.abs(v)<2){auto=null;v=0}}
