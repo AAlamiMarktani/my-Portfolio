@@ -27,7 +27,7 @@
 
 This portfolio centralizes my academic work, presents my technical identity, and gives an interactive window into my software development projects.
 
-Instead of a classic scrolling page, it is a small **3D driving game**: you take the wheel of a Mercedes-AMG on the streets of Monaco, pass through a toll gate announcing *"C'est le parcours de Ali Alami Marktani"*, and each section of my journey is a **rest area** along the road. Pull in or keep driving, it's your choice.
+Instead of a classic scrolling page, it is a small **3D driving game**: you take the wheel of a car on the streets of Monaco, pass through a toll gate announcing *"C'est le parcours de Ali Alami Marktani"*, and each section of my journey is a **rest area** along the road. Pull in or keep driving, it's your choice.
 
 ## 🗺️ The route
 
