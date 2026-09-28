@@ -115,6 +115,4 @@ The site is deployed on **Vercel**. Any push to the main branch redeploys it aut
 ---
 
 <div align="center">
-by **Ali Alami Marktani** · ESISA, Fès
-
 </div>
