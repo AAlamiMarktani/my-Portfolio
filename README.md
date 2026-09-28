@@ -112,7 +112,7 @@ The site is deployed on **Vercel**. Any push to the main branch redeploys it aut
 - 💼 [LinkedIn](https://www.linkedin.com/in/ali-alami-marktani-a8bb6932a)
 - 🐙 [GitHub](https://github.com/2y8bqw7stk-source)
 
----
+
 
 <div align="center">
 </div>
